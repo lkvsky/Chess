@@ -1,4 +1,6 @@
 require 'yaml'
+require 'debugger'
+
 class Game
   attr_accessor :gameboard
 
@@ -44,12 +46,16 @@ class Game
   end
 
   def print_gameboard
-    @gameboard.each do |row|
+    puts "     0  1  2  3  4  5  6  7 "
+    puts "     -  -  -  -  -  -  -  - "
+    @gameboard.each_with_index do |row, i|
+      print " #{i} |"
       row.each do |square|
         if square.nil?
           print " * "
         else
-          print " #{square.mark} "
+          print " #{square.mark.downcase} " if square.team == 1
+          print " #{square.mark} " if square.team == 2
         end
       end
       puts "\n"
@@ -62,8 +68,10 @@ class Game
     true
     print_gameboard
     while true
+      puts "Player 1's turn"
       @player1.make_move
       print_gameboard
+      puts "Player 2's turn"
       @player2.make_move
       print_gameboard
       false
@@ -95,6 +103,7 @@ class HumanPlayer
         move_piece(input)
         return
       end
+      false
     end
   end
 
@@ -103,13 +112,22 @@ class HumanPlayer
     @game.gameboard[start[0]][start[1]].find_possible_moves(start)
 
     if @game.gameboard[start[0]][start[1]].nil?
-      puts "Not a valid move3"
+      puts "Not a valid move, this space is empty"
       return false
     end
 
     if @game.gameboard[start[0]][start[1]].team != @team
       puts "This is not your piece"
-      make_move
+      return false
+    end
+
+    unless @game.gameboard[target[0]][target[1]].nil?
+      puts "There's a piece there"
+      return false
+    end
+
+    unless @game.gameboard[start[0]][start[1]].possible_moves.include?(target)
+      puts "Not inside possible moves"
       return false
     end
 
@@ -120,16 +138,15 @@ class HumanPlayer
     start = input[0]
     target = input[1]
 
-    if @game.gameboard[target[0]][target[1]].nil?
-      if @game.gameboard[start[0]][start[1]].possible_moves.include?(target)
-        @game.gameboard[start[0]][start[1]], @game.gameboard[target[0]][target[1]] = nil, @game.gameboard[start[0]][start[1]]
-      else
-        puts "Not inside possible moves"
-      end
-    else
-      # If opponents piece is there, you can steal it, other wise...
-      puts "There's a piece there"
-    end
+    # if @game.gameboard[target[0]][target[1]].nil?
+    #   if @game.gameboard[start[0]][start[1]].possible_moves.include?(target)
+    @game.gameboard[start[0]][start[1]], @game.gameboard[target[0]][target[1]] = nil, @game.gameboard[start[0]][start[1]]
+    #   else
+    #     puts "Not inside possible moves"
+    #   end
+    # else
+    #   puts "There's a piece there"
+    # end
   end
 
 end
@@ -154,8 +171,9 @@ class Piece
       y = current_loc[1] + coord[1]
       [x, y]
     end
+    p @possible_moves
     @possible_moves.select! do |pair|
-      @game.gameboard[pair[0]][pair[1]].nil? #&& pair[0] > 0 && pair[0] < @game.gameboard.length && pair[1] > 0 && pair[1] < @game.gameboard.length
+      (pair[0] >= 0) && (pair[0] < @game.gameboard.length) && (pair[1] >= 0) && (pair[1] < @game.gameboard.length) && @game.gameboard[pair[0]][pair[1]].nil?
     end
   end
 
