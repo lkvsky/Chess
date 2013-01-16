@@ -19,24 +19,24 @@ class Game
 
   def create_pawns
     8.times do |i|
-      @gameboard[1] << Pawn.new(self, [1,i])
+      @gameboard[1] << Pawn.new(self, 1, [1,i])
       @gameboard[1].shift
     end
     8.times do |i|
-      @gameboard[6] << Pawn.new(self, [6,i])
+      @gameboard[6] << Pawn.new(self, 2, [6,i])
       @gameboard[6].shift
     end
   end
 
   def create_backrow
-    front = [Rook.new(self), Knight.new(self), Bishop.new(self), Queen.new(self), King.new(self), Bishop.new(self), Knight.new(self), Rook.new(self)]
-    back = [Rook.new(self), Knight.new(self), Bishop.new(self), King.new(self), Queen.new(self), Bishop.new(self), Knight.new(self), Rook.new(self)]
-    front.each_with_index do |piece, i|
+    white = [Rook.new(self, 1), Knight.new(self, 1), Bishop.new(self, 1), Queen.new(self, 1), King.new(self, 1), Bishop.new(self, 1), Knight.new(self, 1), Rook.new(self, 1)]
+    black = [Rook.new(self, 2), Knight.new(self, 2), Bishop.new(self, 2), King.new(self, 2), Queen.new(self, 2), Bishop.new(self, 2), Knight.new(self, 2), Rook.new(self, 2)]
+    white.each_with_index do |piece, i|
       piece.current_loc = [0,i]
       @gameboard[0] << piece
       @gameboard[0].shift
     end
-    back.each_with_index do |piece, i|
+    black.each_with_index do |piece, i|
       piece.current_loc = [8,i]
       @gameboard[7] << piece
       @gameboard[7].shift
@@ -63,7 +63,7 @@ class Game
     print_gameboard
     while true
       @player1.make_move
-      #print_gameboard
+      print_gameboard
       @player2.make_move
       print_gameboard
       false
@@ -78,35 +78,57 @@ end
 
 
 class HumanPlayer
-  attr_accessor :type, :current_game
+  attr_accessor :team, :current_game
 
-  def initialize(type, game)
-    type == 1 ? @type = 'w' : @type = 'b'
+  def initialize(team, game)
+    @team = team
     @game = game
   end
 
   def make_move
-    puts "Where do you want to go (ex: A6, B7)"
-    input = gets.chomp.split(",").map do |pair|
-      pair.split(' ').map! { |num| num.to_i }
+    while true
+      puts "Where do you want to go (ex: A6, B7)"
+      input = gets.chomp.split(",").map do |pair|
+        pair.split(' ').map! { |num| num.to_i }
+      end
+      if valid_move?(input)
+        move_piece(input)
+        return
+      end
     end
-    validate_move(input)
   end
 
-  def validate_move(input)
+  def valid_move?(input)
     start, target = input[0], input[1]
     @game.gameboard[start[0]][start[1]].find_possible_moves(start)
+
+    if @game.gameboard[start[0]][start[1]].nil?
+      puts "Not a valid move3"
+      return false
+    end
+
+    if @game.gameboard[start[0]][start[1]].team != @team
+      puts "This is not your piece"
+      make_move
+      return false
+    end
+
+    true
+  end
+
+  def move_piece(input)
+    start = input[0]
+    target = input[1]
 
     if @game.gameboard[target[0]][target[1]].nil?
       if @game.gameboard[start[0]][start[1]].possible_moves.include?(target)
         @game.gameboard[start[0]][start[1]], @game.gameboard[target[0]][target[1]] = nil, @game.gameboard[start[0]][start[1]]
-        @game.print_gameboard
       else
-        puts "Not a valid move"
+        puts "Not inside possible moves"
       end
     else
       # If opponents piece is there, you can steal it, other wise...
-      puts "Not a valid move"
+      puts "There's a piece there"
     end
   end
 
@@ -114,11 +136,12 @@ end
 
 class Piece
 
-  attr_accessor :mark, :current_loc, :direction, :until_blocked, :possible_moves, :game
+  attr_accessor :mark, :current_loc, :direction, :until_blocked, :possible_moves, :game, :team
 
-  def initialize(game, current_loc=[])
+  def initialize(game, team, current_loc=[])
     @current_loc = current_loc
     @game = game
+    @team = team
   end
 
   def find_possible_moves(current_loc)
@@ -131,16 +154,18 @@ class Piece
       y = current_loc[1] + coord[1]
       [x, y]
     end
-    @possible_moves.select! { |pair| @game.gameboard[pair[0]][pair[1]].nil? }
+    @possible_moves.select! do |pair|
+      @game.gameboard[pair[0]][pair[1]].nil? #&& pair[0] > 0 && pair[0] < @game.gameboard.length && pair[1] > 0 && pair[1] < @game.gameboard.length
+    end
   end
 
 end
 
 class Pawn < Piece
-  def initialize(game, current_loc=[])
-    super(game, current_loc)
+  def initialize(game, team, current_loc=[])
+    super(game, team, current_loc)
     @mark = 'P'
-    @direction = [[1,0]]
+    @team == 1 ? @direction = [[1,0]] : @direction = [[-1,0]]
     @until_blocked = false
   end
 
@@ -148,8 +173,8 @@ class Pawn < Piece
 end
 
 class Rook < Piece
-  def initialize(game, current_loc=[])
-    super(game, current_loc)
+  def initialize(game, team, current_loc=[])
+    super(game, team, current_loc)
     @mark = 'R'
     @direction = [[1,0], [-1,0], [0,-1], [0,1]]
     @until_blocked = true
@@ -158,8 +183,8 @@ class Rook < Piece
 end
 
 class Knight < Piece
-  def initialize(game, current_loc=[])
-    super(game, current_loc)
+  def initialize(game, team, current_loc=[])
+    super(game, team, current_loc)
     @mark = 'H'
     @direction = [[-1, 2], [1, 2], [2, -1], [2, 1], [1, -2], [-1, -2], [-2, 1], [-2, -1]]
     @until_blocked = false
@@ -167,8 +192,8 @@ class Knight < Piece
 end
 
 class Bishop < Piece
-  def initialize(game, current_loc=[])
-    super(game, current_loc)
+  def initialize(game, team, current_loc=[])
+    super(game, team, current_loc)
     @mark = 'B'
     @direction = [[1,1], [-1,-1], [1,-1], [-1,1]]
     @until_blocked = true
@@ -176,8 +201,8 @@ class Bishop < Piece
 end
 
 class King < Piece
-  def initialize(game, current_loc=[])
-    super(game, current_loc)
+  def initialize(game, team, current_loc=[])
+    super(game, team, current_loc)
     @mark = 'K'
     @direction = [[1,0], [-1,0], [0,-1], [0,1], [1,1], [-1,-1], [1,-1], [-1,1]]
     @until_blocked = false
@@ -187,8 +212,8 @@ class King < Piece
 end
 
 class Queen < Piece
-  def initialize(game, current_loc=[])
-    super(game, current_loc)
+  def initialize(game, team, current_loc=[])
+    super(game, team, current_loc)
     @mark = 'Q'
     @direction = [[1,0], [-1,0], [0,-1], [0,1], [1,1], [-1,-1], [1,-1], [-1,1]]
     @until_blocked = true
