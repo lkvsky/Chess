@@ -1,0 +1,194 @@
+--- !ruby/object:Game
+gameboard:
+- - !ruby/object:Rook
+    current_loc:
+    - 0
+    - 0
+    mark: R
+  - !ruby/object:Knight
+    current_loc:
+    - 0
+    - 1
+    mark: H
+  - !ruby/object:Bishop
+    current_loc:
+    - 0
+    - 2
+    mark: B
+  - !ruby/object:Queen
+    current_loc:
+    - 0
+    - 3
+    mark: Q
+  - !ruby/object:King
+    current_loc:
+    - 0
+    - 4
+    mark: K
+  - !ruby/object:Bishop
+    current_loc:
+    - 0
+    - 5
+    mark: B
+  - !ruby/object:Knight
+    current_loc:
+    - 0
+    - 6
+    mark: H
+  - !ruby/object:Rook
+    current_loc:
+    - 0
+    - 7
+    mark: R
+- - !ruby/object:Pawn
+    current_loc:
+    - 1
+    - 0
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 1
+    - 1
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 1
+    - 2
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 1
+    - 3
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 1
+    - 4
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 1
+    - 5
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 1
+    - 6
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 1
+    - 7
+    mark: P
+- - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+- - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+- - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+- - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+- - !ruby/object:Pawn
+    current_loc:
+    - 6
+    - 0
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 6
+    - 1
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 6
+    - 2
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 6
+    - 3
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 6
+    - 4
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 6
+    - 5
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 6
+    - 6
+    mark: P
+  - !ruby/object:Pawn
+    current_loc:
+    - 6
+    - 7
+    mark: P
+- - !ruby/object:Rook
+    current_loc:
+    - 8
+    - 0
+    mark: R
+  - !ruby/object:Knight
+    current_loc:
+    - 8
+    - 1
+    mark: H
+  - !ruby/object:Bishop
+    current_loc:
+    - 8
+    - 2
+    mark: B
+  - !ruby/object:King
+    current_loc:
+    - 8
+    - 3
+    mark: K
+  - !ruby/object:Queen
+    current_loc:
+    - 8
+    - 4
+    mark: Q
+  - !ruby/object:Bishop
+    current_loc:
+    - 8
+    - 5
+    mark: B
+  - !ruby/object:Knight
+    current_loc:
+    - 8
+    - 6
+    mark: H
+  - !ruby/object:Rook
+    current_loc:
+    - 8
+    - 7
+    mark: R
