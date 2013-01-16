@@ -52,10 +52,9 @@ class Game
       print " #{i} |"
       row.each do |square|
         if square.nil?
-          print " * "
+          print " \u25A1 "
         else
-          print " #{square.mark.downcase} " if square.team == 1
-          print " #{square.mark} " if square.team == 2
+          print " #{square.mark} "
         end
       end
       puts "\n"
@@ -137,16 +136,7 @@ class HumanPlayer
   def move_piece(input)
     start = input[0]
     target = input[1]
-
-    # if @game.gameboard[target[0]][target[1]].nil?
-    #   if @game.gameboard[start[0]][start[1]].possible_moves.include?(target)
     @game.gameboard[start[0]][start[1]], @game.gameboard[target[0]][target[1]] = nil, @game.gameboard[start[0]][start[1]]
-    #   else
-    #     puts "Not inside possible moves"
-    #   end
-    # else
-    #   puts "There's a piece there"
-    # end
   end
 
 end
@@ -162,10 +152,7 @@ class Piece
   end
 
   def find_possible_moves(current_loc)
-    # look at board
-    # compare current loc
-    # piece move function
-    # return list of possible moves
+
     @possible_moves = self.direction.map do |coord|
       x = current_loc[0] + coord[0]
       y = current_loc[1] + coord[1]
@@ -182,8 +169,8 @@ end
 class Pawn < Piece
   def initialize(game, team, current_loc=[])
     super(game, team, current_loc)
-    @mark = 'P'
     @team == 1 ? @direction = [[1,0]] : @direction = [[-1,0]]
+    @team == 1 ? @mark = "\u2659" : @mark = "\u265F"
     @until_blocked = false
   end
 
@@ -193,7 +180,7 @@ end
 class Rook < Piece
   def initialize(game, team, current_loc=[])
     super(game, team, current_loc)
-    @mark = 'R'
+    @team == 1 ? @mark = "\u2656" : @mark = "\u265C"
     @direction = [[1,0], [-1,0], [0,-1], [0,1]]
     @until_blocked = true
   end
@@ -203,7 +190,7 @@ end
 class Knight < Piece
   def initialize(game, team, current_loc=[])
     super(game, team, current_loc)
-    @mark = 'H'
+    @team == 1 ? @mark = "\u2658" : @mark = "\u265E"
     @direction = [[-1, 2], [1, 2], [2, -1], [2, 1], [1, -2], [-1, -2], [-2, 1], [-2, -1]]
     @until_blocked = false
   end
@@ -212,7 +199,7 @@ end
 class Bishop < Piece
   def initialize(game, team, current_loc=[])
     super(game, team, current_loc)
-    @mark = 'B'
+    @team == 1 ? @mark = "\u2657" : @mark = "\u265D"
     @direction = [[1,1], [-1,-1], [1,-1], [-1,1]]
     @until_blocked = true
   end
@@ -221,7 +208,7 @@ end
 class King < Piece
   def initialize(game, team, current_loc=[])
     super(game, team, current_loc)
-    @mark = 'K'
+    @team == 1 ? @mark = "\u2654" : @mark = "\u265A"
     @direction = [[1,0], [-1,0], [0,-1], [0,1], [1,1], [-1,-1], [1,-1], [-1,1]]
     @until_blocked = false
   end
@@ -232,7 +219,7 @@ end
 class Queen < Piece
   def initialize(game, team, current_loc=[])
     super(game, team, current_loc)
-    @mark = 'Q'
+    @team == 1 ? @mark = "\u2655" : @mark = "\u265B"
     @direction = [[1,0], [-1,0], [0,-1], [0,1], [1,1], [-1,-1], [1,-1], [-1,1]]
     @until_blocked = true
   end
