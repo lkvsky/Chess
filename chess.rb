@@ -220,7 +220,9 @@ class Piece
         break if !valid_position?(x)
         break if !valid_position?(y)
       end
-      every_position_possible << [x,y] if !@game.gameboard[x][y].nil? && @game.gameboard[x][y].team != @team
+      if valid_position?(x) && valid_position?(y) && !@game.gameboard[x][y].nil? && @game.gameboard[x][y].team != @team
+        every_position_possible << [x,y] 
+      end
 
     end
     every_position_possible.select! do |pair|
