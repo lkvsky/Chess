@@ -210,19 +210,19 @@ class Piece
   end
 
   def find_possible_trail(current_loc)
+    #debugger
     every_position_possible = []
 
     self.direction.each do |path|
       x = current_loc[0] + path[0]
       y = current_loc[1] + path[1]
 
-      next if !valid_position?
-
+      next if !valid_position?(x)
       while @game.gameboard[x][y].nil? do
         every_position_possible << [x,y]
         x, y = x + path[0], y + path[1]
       end
-      every_position_possible << [x,y] if @game.gameboard[x][y].team != @team
+      every_position_possible << [x,y] if @game.gameboard[x][y].team != @team && !every_position_possible.include([x,y])
 
     end
     every_position_possible.select! do |pair|
@@ -232,7 +232,7 @@ class Piece
     every_position_possible
   end
 
-  def valid_position?
+  def valid_position?(x)
     if x >= @game.gameboard.length || x < 0
       return false
     end
