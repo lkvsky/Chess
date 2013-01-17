@@ -210,17 +210,14 @@ class Piece
     self.direction.each do |path|
       x = current_loc[0] + path[0]
       y = current_loc[1] + path[1]
-
-      next if !valid_position?(x)
-      next if !valid_position?(y)
+      next if !valid_position?(x,y)
 
       while @game.gameboard[x][y].nil? do
         every_position_possible << [x,y]
         x, y = x + path[0], y + path[1]
-        break if !valid_position?(x)
-        break if !valid_position?(y)
+        break if !valid_position?(x,y)
       end
-      if valid_position?(x) && valid_position?(y) && !@game.gameboard[x][y].nil? && @game.gameboard[x][y].team != @team
+      if valid_position?(x,y) && !@game.gameboard[x][y].nil? && @game.gameboard[x][y].team != @team
         every_position_possible << [x,y] 
       end
 
@@ -232,8 +229,8 @@ class Piece
     every_position_possible
   end
 
-  def valid_position?(x)
-    if x >= @game.gameboard.length || x < 0
+  def valid_position?(x,y)
+    if x >= @game.gameboard.length || x < 0 || y >= @game.gameboard.length || y < 0
       return false
     end
     true
