@@ -11,7 +11,7 @@ class Game
   def create_gameboard
     @gameboard = Array.new(8){Array.new(8)}
     create_pawns
-    create_backrow
+    create_backrow #I think out game setup is similar.
   end
 
   def save_game(filename)
@@ -55,7 +55,7 @@ class Game
       print " #{i} |"
       row.each do |square|
         if square.nil?
-          print " \u25A1 "
+          print " \u25A1 " # yay for unicode characters.
         else
           print " #{square.mark} "
         end
@@ -68,7 +68,7 @@ class Game
     user_settings
     create_gameboard
     print_gameboard
-    while true
+    while true  # 
       puts "Player 1's turn"
       @player1.make_move
       print_gameboard
@@ -101,7 +101,7 @@ class HumanPlayer
   def initialize(team, game)
     @team = team
     @game = game
-    @captured = []
+    @captured = [] # We didn't get to this or add it to our design yet. Good job.
   end
 
   def get_input
@@ -304,12 +304,3 @@ class Queen < Piece
     @until_blocked = true
   end
 end
-
-
-
-
-
-
-
-
-
