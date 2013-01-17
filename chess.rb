@@ -177,8 +177,13 @@ class HumanPlayer
     if !@game.gameboard[start[0]][start[1]].kill?(target)
       @game.gameboard[start[0]][start[1]], @game.gameboard[target[0]][target[1]] = nil, @game.gameboard[start[0]][start[1]]
     else
-      @captured << @game.gameboard[target[0]][target[1]]
-      @game.gameboard[start[0]][start[1]], @game.gameboard[target[0]][target[1]] = nil, @game.gameboard[start[0]][start[1]]
+      if @game.gameboard[start[0]][start[1]].king_captured?(target)
+        puts "GAME OVER"
+        return
+      else
+        @captured << @game.gameboard[target[0]][target[1]]
+        @game.gameboard[start[0]][start[1]], @game.gameboard[target[0]][target[1]] = nil, @game.gameboard[start[0]][start[1]]
+      end
     end
   end
 
@@ -239,6 +244,10 @@ class Piece
       return true if @game.gameboard[target[0]][target[1]].team != self.team
     end
     false
+  end
+
+  def king_captured?(target)
+    target.class == King && target.team != self.team
   end
 end
 
