@@ -1,5 +1,4 @@
 require 'yaml'
-require 'debugger'
 
 require './player.rb'
 require './pieces.rb'
@@ -9,6 +8,45 @@ class Game
   attr_accessor :gameboard
 
   def initialize
+    user_settings
+    create_gameboard
+  end
+
+  def play
+    print_gameboard
+    while true
+      puts "Player 1's turn"
+      @player1.make_move
+      print_gameboard
+      break if game_over?
+
+      puts "Player 2's turn"
+      @player2.make_move
+      print_gameboard
+      break if game_over?
+    end
+    puts "Player 1 wins!" if @player1.check_mate
+    puts "Player 2 wins!" if @player2.check_mate
+  end
+
+  def save_game
+    puts "Enter the filename:"
+    game = File.open(gets.chomp, "w") do |f|
+      YAML.dump(self, f)
+    end
+  end
+
+  def load_game
+    puts "Enter the filename: "
+    saved_game = gets.chomp
+    file = File.readlines("#{saved_game}").join
+    YAML.load(file)
+  end
+
+  private
+
+  def user_settings
+    @player1, @player2 = HumanPlayer.new(1, self), HumanPlayer.new(2, self)
   end
 
   def create_gameboard
@@ -17,19 +55,13 @@ class Game
     create_backrow
   end
 
-  def save_game(filename)
-    game = File.open(filename, "w")
-    game.write(self.to_yaml)
-    game.close
-  end
-
   def create_pawns
     8.times do |i|
-      @gameboard[1] << Pawn.new(self, 1, [1,i])
+      @gameboard[1] << Pawn.new(self, 1)
       @gameboard[1].shift
     end
     8.times do |i|
-      @gameboard[6] << Pawn.new(self, 2, [6,i])
+      @gameboard[6] << Pawn.new(self, 2)
       @gameboard[6].shift
     end
   end
@@ -40,12 +72,10 @@ class Game
     black = [Rook.new(self, 2), Knight.new(self, 2), Bishop.new(self, 2), King.new(self, 2),
               Queen.new(self, 2), Bishop.new(self, 2), Knight.new(self, 2), Rook.new(self, 2)]
     white.each_with_index do |piece, i|
-      piece.current_loc = [0,i]
       @gameboard[0] << piece
       @gameboard[0].shift
     end
     black.each_with_index do |piece, i|
-      piece.current_loc = [8,i]
       @gameboard[7] << piece
       @gameboard[7].shift
     end
@@ -65,25 +95,13 @@ class Game
       end
       puts "\n"
     end
+    puts "\n"
   end
 
-  def play
-    user_settings
-    create_gameboard
-    print_gameboard
-    while true
-      puts "Player 1's turn"
-      @player1.make_move
-      print_gameboard
-      puts "Player 2's turn"
-      @player2.make_move
-      print_gameboard
-      false
-    end
+  def game_over?
+    @player1.check_mate || @player2.check_mate
   end
 
-
-  def user_settings
-    @player1, @player2 = HumanPlayer.new(1, self), HumanPlayer.new(2, self)
+  def inspect
   end
 end

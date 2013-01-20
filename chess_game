@@ -1,0 +1,461 @@
+--- &70326764853840 !ruby/object:Game
+quit: false
+player1: !ruby/object:HumanPlayer
+  team: 1
+  game: *70326764853840
+  check_mate: false
+  captured: []
+player2: !ruby/object:HumanPlayer
+  team: 2
+  game: *70326764853840
+  check_mate: false
+  captured: []
+gameboard:
+- - !ruby/object:Rook
+    game: *70326764853840
+    team: 1
+    mark: ♖
+    direction:
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - -1
+    - - 0
+      - 1
+    until_blocked: true
+  - !ruby/object:Knight
+    game: *70326764853840
+    team: 1
+    mark: ♘
+    direction:
+    - - -1
+      - 2
+    - - 1
+      - 2
+    - - 2
+      - -1
+    - - 2
+      - 1
+    - - 1
+      - -2
+    - - -1
+      - -2
+    - - -2
+      - 1
+    - - -2
+      - -1
+    until_blocked: false
+  - !ruby/object:Bishop
+    game: *70326764853840
+    team: 1
+    mark: ♗
+    direction:
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - 1
+      - -1
+    - - -1
+      - 1
+    until_blocked: true
+  - !ruby/object:Queen
+    game: *70326764853840
+    team: 1
+    mark: ♕
+    direction:
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - -1
+    - - 0
+      - 1
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - 1
+      - -1
+    - - -1
+      - 1
+    until_blocked: true
+  - !ruby/object:King
+    game: *70326764853840
+    team: 1
+    mark: ♔
+    direction:
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - -1
+    - - 0
+      - 1
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - 1
+      - -1
+    - - -1
+      - 1
+    until_blocked: false
+  - !ruby/object:Bishop
+    game: *70326764853840
+    team: 1
+    mark: ♗
+    direction:
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - 1
+      - -1
+    - - -1
+      - 1
+    until_blocked: true
+  - !ruby/object:Knight
+    game: *70326764853840
+    team: 1
+    mark: ♘
+    direction:
+    - - -1
+      - 2
+    - - 1
+      - 2
+    - - 2
+      - -1
+    - - 2
+      - 1
+    - - 1
+      - -2
+    - - -1
+      - -2
+    - - -2
+      - 1
+    - - -2
+      - -1
+    until_blocked: false
+  - !ruby/object:Rook
+    game: *70326764853840
+    team: 1
+    mark: ♖
+    direction:
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - -1
+    - - 0
+      - 1
+    until_blocked: true
+- - !ruby/object:Pawn
+    game: *70326764853840
+    team: 1
+    direction:
+    - - 1
+      - 0
+    mark: ♙
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 1
+    direction:
+    - - 1
+      - 0
+    mark: ♙
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 1
+    direction:
+    - - 1
+      - 0
+    mark: ♙
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 1
+    direction:
+    - - 1
+      - 0
+    mark: ♙
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 1
+    direction:
+    - - 1
+      - 0
+    mark: ♙
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 1
+    direction:
+    - - 1
+      - 0
+    mark: ♙
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 1
+    direction:
+    - - 1
+      - 0
+    mark: ♙
+    until_blocked: false
+  - 
+- - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 1
+    direction:
+    - - 1
+      - 0
+    mark: ♙
+    until_blocked: false
+- - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+- - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+- - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+- - !ruby/object:Pawn
+    game: *70326764853840
+    team: 2
+    direction:
+    - - -1
+      - 0
+    mark: ♟
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 2
+    direction:
+    - - -1
+      - 0
+    mark: ♟
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 2
+    direction:
+    - - -1
+      - 0
+    mark: ♟
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 2
+    direction:
+    - - -1
+      - 0
+    mark: ♟
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 2
+    direction:
+    - - -1
+      - 0
+    mark: ♟
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 2
+    direction:
+    - - -1
+      - 0
+    mark: ♟
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 2
+    direction:
+    - - -1
+      - 0
+    mark: ♟
+    until_blocked: false
+  - !ruby/object:Pawn
+    game: *70326764853840
+    team: 2
+    direction:
+    - - -1
+      - 0
+    mark: ♟
+    until_blocked: false
+- - !ruby/object:Rook
+    game: *70326764853840
+    team: 2
+    mark: ♜
+    direction:
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - -1
+    - - 0
+      - 1
+    until_blocked: true
+  - !ruby/object:Knight
+    game: *70326764853840
+    team: 2
+    mark: ♞
+    direction:
+    - - -1
+      - 2
+    - - 1
+      - 2
+    - - 2
+      - -1
+    - - 2
+      - 1
+    - - 1
+      - -2
+    - - -1
+      - -2
+    - - -2
+      - 1
+    - - -2
+      - -1
+    until_blocked: false
+  - !ruby/object:Bishop
+    game: *70326764853840
+    team: 2
+    mark: ♝
+    direction:
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - 1
+      - -1
+    - - -1
+      - 1
+    until_blocked: true
+  - !ruby/object:King
+    game: *70326764853840
+    team: 2
+    mark: ♚
+    direction:
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - -1
+    - - 0
+      - 1
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - 1
+      - -1
+    - - -1
+      - 1
+    until_blocked: false
+  - !ruby/object:Queen
+    game: *70326764853840
+    team: 2
+    mark: ♛
+    direction:
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - -1
+    - - 0
+      - 1
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - 1
+      - -1
+    - - -1
+      - 1
+    until_blocked: true
+  - !ruby/object:Bishop
+    game: *70326764853840
+    team: 2
+    mark: ♝
+    direction:
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - 1
+      - -1
+    - - -1
+      - 1
+    until_blocked: true
+  - !ruby/object:Knight
+    game: *70326764853840
+    team: 2
+    mark: ♞
+    direction:
+    - - -1
+      - 2
+    - - 1
+      - 2
+    - - 2
+      - -1
+    - - 2
+      - 1
+    - - 1
+      - -2
+    - - -1
+      - -2
+    - - -2
+      - 1
+    - - -2
+      - -1
+    until_blocked: false
+  - !ruby/object:Rook
+    game: *70326764853840
+    team: 2
+    mark: ♜
+    direction:
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - -1
+    - - 0
+      - 1
+    until_blocked: true
