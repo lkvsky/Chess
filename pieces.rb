@@ -8,13 +8,21 @@ class Piece
     @team = team
   end
 
+  def all_moves(location)
+    if @until_blocked
+      find_possible_trail(location)
+    else
+      find_possible_moves(location)
+    end
+  end
+
   def find_possible_moves(current_loc)
     self.direction.map do |coord|
       x = current_loc[0] + coord[0]
       y = current_loc[1] + coord[1]
       [x, y]
     end.select do |pair|
-      (pair[0] >= 0) && (pair[0] < @game.gameboard.length) && (pair[1] >= 0) && (pair[1] < @game.gameboard.length)
+      valid_position?(pair[0], pair[1])
     end
   end
 

@@ -1,4 +1,5 @@
 require 'yaml'
+require 'debugger'
 
 require './player.rb'
 require './pieces.rb'
