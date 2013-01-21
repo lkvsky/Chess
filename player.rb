@@ -20,15 +20,16 @@ class HumanPlayer
   def make_move
     while true
       input = process_input
-      
+
       if valid_move?(input)
         move_piece(input)
+        puts "CHECK" if check?(input[1])
         return
       end
     end
   end
 
-  private
+  # private
 
   def get_input
     while true
@@ -61,31 +62,48 @@ class HumanPlayer
     end
 
     board[start[0]][start[1]], board[target[0]][target[1]] = nil, board[start[0]][start[1]]
-    
-    puts "CHECK" if check?(target)
   end
 
   def valid_move?(input)
-    start, target, board = input[0], input[1], @game.gameboard
+    return false unless space_empty?(input)
+    return false unless your_piece?(input)
+    return false unless move_included?(input)
+
+    true
+  end
+
+  def space_empty?(input)
+    start, board = input[0], @game.gameboard
 
     if board[start[0]][start[1]].nil?
       puts "Not a valid move, this space is empty"
       return false
     end
 
-    possible_moves = board[start[0]][start[1]].all_moves(start)
+    true
+  end
 
+  def your_piece?(input)
+    start, target, board = input[0], input[1], @game.gameboard
+    # starting piece is your piece?
     if board[start[0]][start[1]].team != @team
       puts "This is not your piece"
       return false
     end
-
+    # target piece is your piece?
     unless board[target[0]][target[1]].nil?
       unless capture?(start, target)
         puts "Your piece is there"
         return false
       end
     end
+
+    true
+  end
+
+  def move_included?(input)
+    start, target, board = input[0], input[1], @game.gameboard
+    possible_moves = board[start[0]][start[1]].all_moves(start)
 
     unless possible_moves.include?(target)
       puts "Not inside possible moves"

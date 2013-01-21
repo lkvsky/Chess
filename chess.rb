@@ -50,7 +50,7 @@ class Game
   end
 
   def create_gameboard
-    @gameboard = Array.new(8){Array.new(8)}
+    @gameboard = Array.new(8) { Array.new(8) }
     create_pawns
     create_backrow
   end

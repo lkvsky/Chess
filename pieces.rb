@@ -17,15 +17,14 @@ class Piece
     end
   end
 
-  private
+  # private
 
   def find_possible_moves(current_loc)
     board = @game.gameboard
     direction = self.direction
 
     possibles = direction.map do |coord|
-      x = current_loc[0] + coord[0]
-      y = current_loc[1] + coord[1]
+      x, y = (current_loc[0] + coord[0]), (current_loc[1] + coord[1])
       [x, y]
     end.select do |pair|
       valid_position?(pair[0], pair[1])
@@ -37,14 +36,13 @@ class Piece
     every_position_possible = []
 
     self.direction.each do |path|
-      x = current_loc[0] + path[0]
-      y = current_loc[1] + path[1]
-      next if !valid_position?(x,y)
+      x, y = (current_loc[0] + path[0]), (current_loc[1] + path[1])
+      next if !valid_position?(x, y)
 
       while board[x][y].nil? do
         every_position_possible << [x,y]
-        x, y = x + path[0], y + path[1]
-        break if !valid_position?(x,y)
+        x, y = (x + path[0]), (y + path[1])
+        break if !valid_position?(x, y)
       end
 
       if valid_position?(x,y) && !board[x][y].nil? && board[x][y].team != @team
