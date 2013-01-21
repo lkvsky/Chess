@@ -5,7 +5,7 @@ require './pieces.rb'
 
 class Game
 
-  attr_accessor :gameboard
+  attr_accessor :gameboard, :player1, :player2
 
   def initialize
     user_settings

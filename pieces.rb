@@ -8,8 +8,10 @@ class Piece
   end
 
   def all_moves(location)
-    if @until_blocked
-      find_possible_trail(location)
+    if self.class == Pawn
+      return pawn_moves(location)
+    elsif @until_blocked
+      return find_possible_trail(location)
     else
       find_possible_moves(location)
     end
@@ -18,11 +20,8 @@ class Piece
   private
 
   def find_possible_moves(current_loc)
+    board = @game.gameboard
     direction = self.direction
-
-    if self.class == Pawn
-      direction = pawn_moves
-    end
 
     possibles = direction.map do |coord|
       x = current_loc[0] + coord[0]
@@ -56,9 +55,10 @@ class Piece
     every_position_possible
   end
 
-  def pawn_moves
+  def pawn_moves(current_loc)
     direction = []
     direction += self.direction
+    board = @game.gameboard
 
     if self.first_move
       self.direction.map do |coord|
@@ -69,7 +69,31 @@ class Piece
       self.first_move = false
     end
 
-    direction
+    possibles = direction.map do |coord|
+      x, y = current_loc[0] + coord[0], current_loc[1] + coord[1]
+      [x, y]
+    end.select do |pair|
+      valid_position?(pair[0], pair[1]) && board[pair[0]][pair[1]].nil?
+    end
+
+    return possibles if pawn_kills(current_loc).nil?
+    possibles + pawn_kills(current_loc)
+  end
+
+  def pawn_kills(current_loc)
+    board = @game.gameboard
+    kills = []
+
+    self.direction.map do |coord|
+      x, y = (coord[0] + current_loc[0]), (coord[1] + current_loc[1] + 1)
+      kills << [x, y]
+    end
+    self.direction.map do |coord|
+      x, y = (coord[0] + current_loc[0]), (coord[1] + current_loc[1] - 1)
+      kills << [x, y]
+    end
+
+    kills.select { |pair| !board[pair[0]][pair[1]].nil? }
   end
 
   def valid_position?(x,y)
