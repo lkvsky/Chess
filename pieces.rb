@@ -96,10 +96,7 @@ class Piece
 
   def valid_position?(x,y)
     board = @game.gameboard
-    if x >= board.length || x < 0 || y >= board.length || y < 0
-      return false
-    end
-    true
+    x < board.length && x >= 0 && y < board.length && y >= 0
   end
 end
 
